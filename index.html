@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Projekt Titel</title>
+        <script src="https://kit.fontawesome.com/8be3a50bcc.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+        <script src="./qrCodeScannerScript.js"></script>
+        <link rel="stylesheet" href="css/style.css"></link>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@200&display=swap" rel="stylesheet">
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="left_to_right">
+            <div class="sidebar_container">
+                <div id="gen" class="round_btn active" onclick=""><i class="icon-qrcode"></i></div>
+                <div id="scan" class="round_btn"><i class="icon-qrcode_scan"></i></div>
+            </div>
+            <div>
+                <form id="qrForm" action="/add" method="POST">
+                    <ul class="flex-outer">
+                        <li>
+                            <input type="text" id = "name" name="name" placeholder="Produktname" required>
+                        </li>
+                        <li>
+                            <textarea rows="6" id = "desc" name="desc" placeholder="Beschreibung" required></textarea>
+                        </li>
+                        <li>
+                            <select id = "type" name="type" placeholder="Wähle eine Kategorie" required>
+                                <option value="foodandbeverages">Food & Beverages</option>
+                                <option value="customandtourism">Custom & Tourism</option>
+                                <option value="digital">Digital</option>
+                            </select>
+                        </li>
+                        <li>
+                            <button type="submit" class="submit-qr">Generiere</i></button>
+                        </li>
+                    </ul>
+                </form>          
+            </div>
+            <image id="qrcode"></image>  
+            <div id="qrScanner">
+                <p>Hast du dir schonmal die Frage gestellt was eigentlich genau in dem Produkt ist welches du gerade in der Hand hälst?</p>
+                <img id="whatsinside" src="./knowwhatsinside.png" alt="" style="width: 25%; height: 25%;"></img>
+                <img src="./qrcode_scan.png" style="z-index: 999; position:absolute; top:0; left:0" hidden="" id="overlay"></img> 
+                <canvas style="width:400px; height:400px; object-fit: cover;" hidden="" id="qr-canvas"></canvas>
+            </div>
+            <script src="./qrCodeScanner.js"></script>
+        </div>
+    </body>
+    <script>
+        $(".round_btn").click(function() {
+            if(!$(this).hasClass("active")) {
+                $(".round_btn").toggleClass("active");
+                $(this).addClass("active");
+            }
+
+            if($("#scan").hasClass("active")) {
+                $(".flex-outer").hide();
+                $("#qrcode").hide();
+                $("#qrScanner").show();
+
+                //next step show scanner
+            }
+
+            if($("#gen").hasClass("active")) {
+                //hide scanner
+                $("#qrScanner").hide();
+                $(".flex-outer").show();
+                $("#qrcode").show();
+            }
+        });
+
+        $('#qrForm').submit(function(e){
+            e.preventDefault();
+            $.ajax({
+                url: '/add',
+                type: 'post',
+                data:$('#qrForm').serialize(),
+                success: function(){
+                    console.log("Stopped Redirection ✅")
+                }
+            });
+            document.getElementById("name").value = "";
+            document.getElementById("desc").value = "";
+            createQR();
+        });
+
+        async function createQR() {
+            try {
+                const response = await fetch('/getqrcode', {
+                    method: 'POST'
+                });
+                const url = await response.json();
+                let qrcode = document.getElementById('qrcode');
+                qrcode.src = url;
+            } catch(e) {
+                createQR();
+            }
+        }
+    </script>
+</html>
