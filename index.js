@@ -65,6 +65,14 @@ app.post("/qrscan", async function (req, res) {
     console.log(
       `Got entry from database ✅ \n Name: ${result[0].name} \n Description: ${result[0].desc} \n Type: ${result[0].type}`
     );
+    let dbinfo = {
+      name: result[0].name,
+      desc: result[0].desc,
+      type: result[0].type
+    }
+    app.post("/getdbinfo", function (req, res) {
+      res.json(JSON.stringify(dbinfo));
+    });
     db.close();
   });
 });

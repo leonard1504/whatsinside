@@ -25,6 +25,7 @@ qrcode.callback = (res) => {
 
       console.log(content);
     })();
+    getQRInfo();
     scanning = false;
 
     video.srcObject.getTracks().forEach((track) => {
@@ -71,5 +72,22 @@ function scan() {
     qrcode.decode();
   } catch (e) {
     setTimeout(scan, 100);
+  }
+}
+
+async function getQRInfo() {
+  try {
+      const response = await fetch('/getdbinfo', {
+          method: 'POST'
+      });
+      const dbinfoResponse = await response.json();
+      const dbinfo = JSON.parse(dbinfoResponse);
+      let dbname = document.getElementById('dbname');
+      let dbdesc = document.getElementById('dbdesc');
+      dbname.innerText = `${dbinfo.name}`;
+      dbdesc.innerText = `${dbinfo.desc}`;
+      if(dbname.innerText != "") { $(".dbinfo").show(); }
+  } catch(e) {
+      getQRInfo();
   }
 }

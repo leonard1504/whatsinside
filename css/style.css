@@ -14,7 +14,6 @@
 [class*=" icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: "icomoon" !important;
-  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -41,8 +40,9 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: left;
+  justify-items: center;
+  align-items: center;
   flex: 0 0 auto;
 }
 
@@ -86,90 +86,6 @@ body {
   background: #A6C6FF;
 }
 
-.flex-outer {
-  margin-top: 200px;
-  margin-left: 75px;
-}
-
-.flex-outer li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  font-family: 'Sora', sans-serif;
-}
-
-.flex-outer > li + * {
-  flex: 1 0 220px;
-  font-family: 'Sora', sans-serif;
-}
-
-.flex-outer li button {
-  border: none;
-  border-radius: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: x-large;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #5C86EC;
-  color: #f2f2f2;
-  cursor: pointer;
-  font-family: 'Sora', sans-serif;
-  margin-left: 210px;
-}
-
-.flex-outer > li > input,
-.flex-outer > li > textarea {
-  padding: 8px 16px;
-  margin-top: 10px;
-  border-radius: 20px;
-  font-size: x-large;
-  text-align: left;
-  justify-content: center;
-  border: none;
-  stroke: none;
-  outline-width: 0;
-  background-color: #5C86EC;
-  color: white;
-  font-family: 'Sora', sans-serif;
-  width: 323.6px;
-  max-width: 323.6px;
-}
-
-.flex-outer > li > input,
-.flex-outer > li > select {
-  padding: 8px 16px;
-  margin-top: 10px;
-  border-radius: 20px;
-  font-size: x-large;
-  text-align: left;
-  justify-content: center;
-  border: none;
-  stroke: none;
-  outline-width: 0;
-  background-color: #5C86EC;
-  color: white;
-  font-family: 'Sora', sans-serif;
-  width: 356.7px;
-  max-width: 356.7px;
-  -moz-appearance: none; /* Firefox */
-  -webkit-appearance: none; /* Safari and Chrome */
-  appearance: none;
-}
-
-.flex-outer > li > input {
-  width: 323.6px;
-  max-width: 323.6px;
-}
-
-.flex-outer > li > textarea {
-  resize: none;
-}
-
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: white;
@@ -198,4 +114,127 @@ body {
   padding: 20px;
   max-width: 700px;
   background-color: white;
+}
+
+#toplist {
+  border-radius: 20px 20px 0px 0px;
+  padding: 8px 16px;
+  margin-bottom: 0px;
+  font-size: x-large;
+  background-color: #5C86EC;
+  color: white;
+  font-family: 'Sora', sans-serif;
+}
+
+.botlist {
+  border-radius: 0px 0px 20px 20px;
+  background-color: #f2f2f2;
+  margin-top: 0px;
+  font-size: large;
+  color: #5C86EC;
+  font-family: 'Sora', sans-serif;
+}
+
+.container {
+  margin-left: 125px;
+  border-radius: 25px;
+  font-family: 'Sora', sans-serif;
+  display: flex;
+  flex-direction: row;
+  font-size: x-large;
+  width: auto;
+  background-color: #A6C6FF;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.container #whatsinside {
+  /*background-color: #dde8fc;*/
+  background-color: #fcfcfc;
+  color: #5C86EC;
+  border-radius: 20px 0px 0px 20px;
+  padding: 10px 10px 10px 10px;
+  max-width: 33%;
+}
+
+.container #whatsinside img {
+  width: 50%;
+  float: right;
+  padding-right: 20px;
+}
+
+.genForm {
+  display: flex;
+  min-width: 100%;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.genForm > li > input,
+.genForm > li > textarea,
+.genForm > li > a {
+  background-color: white;
+  color: #5C86EC;
+  border-radius: 25px;
+  width: auto;
+  border: none;
+  font-size: large;
+  padding: 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-bottom: 10px;
+  resize: none;
+}
+
+.genForm > li > select {
+  background-color: white;
+  color: #5C86EC;
+  border-radius: 25px;
+  font-size: large;
+  padding: 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 20px;
+  stroke: none;
+  border: none;
+  appearance: none;
+}
+
+*:focus {
+  outline: none;
+}
+
+select::-ms-expand {
+  display: none;
+  appearance: none;
+}
+
+.genForm > li > button {
+  background-color: white;
+  color: #5C86EC;
+  border-radius: 25px;
+  font-size: large;
+  padding: 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 15px;
+  float: right;
+  stroke: none;
+  border: none;
+  appearance: none;
+}
+
+.container .dbinfo {
+  display: flex;
+  width: 100%;
+  margin-left: 10px;
+  flex-direction: row;
+  list-style-type: none;
+}
+
+.container .scanimg canvas {
+  padding-left: 25px;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
+.container .dbinfo div{
+  margin-left: 10px;
 }
