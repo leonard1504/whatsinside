@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 const { type } = require("express/lib/response");
 var MongoClient = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
-let url = "mongodb://localhost:27017/";
+let url = `mongodb+srv://admin:F1qqaFjnlNqvUYzH@cluster0.uvoew.mongodb.net/?retryWrites=true&w=majority`;
 
 require("dotenv").config();
 
