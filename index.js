@@ -22,15 +22,17 @@ app.post("/add", function (req, res) {
   MongoClient.connect(url, async function (err, db) {
     if (err) throw err;
     var dbo = db.db("dhbw");
+    console.log(req.body);
     product = {
       name: req.body.name,
       desc: req.body.desc,
       type: req.body.type,
+      img: req.body.img,
     };
     dbo.collection(`${req.body.type}`).insertOne(product, function (err, res) {
       if (err) throw err;
       console.log(
-        `Added Entry 🧾 \n ID: ${product._id} \n Name: ${product.name} \n Description: ${product.desc} \n Type: ${product.type}`
+        `Added Entry 🧾 \n ID: ${product._id} \n Name: ${product.name} \n Description: ${product.desc} \n Type: ${product.type} \n Image: ${product.img}`
       );
       let db_product = {
         id: product._id,
@@ -63,12 +65,13 @@ app.post("/qrscan", async function (req, res) {
       .find({ _id: ObjectId(`${product.id}`) })
       .toArray();
     console.log(
-      `Got entry from database ✅ \n Name: ${result[0].name} \n Description: ${result[0].desc} \n Type: ${result[0].type}`
+      `Got entry from database ✅ \n Name: ${result[0].name} \n Description: ${result[0].desc} \n Type: ${result[0].type} \n Image: ${result[0].img}`
     );
     let dbinfo = {
       name: result[0].name,
       desc: result[0].desc,
-      type: result[0].type
+      type: result[0].type,
+      img: result[0].img
     }
     app.post("/getdbinfo", function (req, res) {
       res.json(JSON.stringify(dbinfo));

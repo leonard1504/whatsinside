@@ -35,7 +35,7 @@
                                 </li>
                                 <li>
                                     <a onclick="document.getElementById('img').click();">Klicke hier um ein Bild hochzuladen</a>
-                                    <input hidden="" type="file" accept="image/*" id = "img" name="img" placeholder="Füge ein Bild hinzu..." required></input>
+                                    <input type="file" name="img" accept="image/*" id = "img" hidden=""></input>
                                 </li>
                                 <li>
                                     <select id = "type" name="type" placeholder="Wähle eine Kategorie" required>
@@ -50,9 +50,11 @@
                             </div>
                         </ul>
                     </form>
+                    <div>
+                        <image id="qrcode"></image>
+                    </div>
                 </div>
             </div>
-            <image id="qrcode"></image>
             <div id="qrScanner" hidden="">
                 <div class="container">
                     <div id="whatsinside">
@@ -65,16 +67,16 @@
                         <canvas style="width:400px; height:400px; object-fit: cover; top:50%" hidden="" id="qr-canvas"></canvas>
                         <script src="./qrCodeScanner.js"></script>
                     </div>
-                    <div class="dbinfo" hidden="">
+                    <div class="dbinfo" style="display: none;">
                         <div>
                             <h1 id="toplist">Bild</h1>
-                            <p id="dbimg" class="botlist"></p>
+                            <img alt="Kein Bild vorhanden" id="dbimg" class="botlist"></img>
                         </div>
                         <div>
                             <h1 id="toplist">Produktname</h1>
                             <p id="dbname" class="botlist"></p>
                         </div>
-                        <div>
+                        <div id="dbdesc_container">
                             <h1 id="toplist">Beschreibung</h1>
                             <p id="dbdesc" class="botlist"></p>
                         </div>
@@ -104,19 +106,54 @@
             }
         });
 
+        let imagesrc;
+        function readFile() {
+            const file = document.querySelector('input[type=file]').files[0];
+            const reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+               imagesrc = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+        document.getElementById("img").addEventListener("change", readFile);
+
         $('#qrForm').submit(function(e){
             e.preventDefault();
+            var formData = {
+                name: document.getElementById("name").value,
+                desc: document.getElementById("desc").value,
+                type: document.getElementById("type").value,
+                img: imagesrc
+            }
             $.ajax({
                 url: '/add',
                 type: 'post',
-                data:$('#qrForm').serialize(),
+                data: formData,
                 success: function(){
                     console.log("Stopped Redirection ✅")
                 }
             });
             document.getElementById("name").value = "";
             document.getElementById("desc").value = "";
+            document.getElementById("img").value = "";
             createQR();
         });
+
+        async function createQR() {
+            try {
+                const response = await fetch('/getqrcode', {
+                    method: 'POST'
+                });
+                const url = await response.json();
+                let qrcode = document.getElementById('qrcode');
+                qrcode.src = url;
+            } catch(e) {
+                createQR();
+            }
+        }
     </script>
 </html>

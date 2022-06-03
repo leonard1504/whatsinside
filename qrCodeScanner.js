@@ -45,6 +45,7 @@ btnScanQR.onclick = () => {
       video.srcObject = stream;
       video.play();
       tick();
+      $(".dbinfo").hide();
       scan();
     });
 };
@@ -84,8 +85,10 @@ async function getQRInfo() {
       const dbinfo = JSON.parse(dbinfoResponse);
       let dbname = document.getElementById('dbname');
       let dbdesc = document.getElementById('dbdesc');
+      let dbimg = document.getElementById('dbimg');
       dbname.innerText = `${dbinfo.name}`;
       dbdesc.innerText = `${dbinfo.desc}`;
+      dbimg.src = `${dbinfo.img}`;
       if(dbname.innerText != "") { $(".dbinfo").show(); }
   } catch(e) {
       getQRInfo();
