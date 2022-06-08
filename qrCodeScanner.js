@@ -72,7 +72,7 @@ function scan() {
   try {
     qrcode.decode();
   } catch (e) {
-    setTimeout(scan, 100);
+    setTimeout(scan, 10);
   }
 }
 
@@ -86,9 +86,14 @@ async function getQRInfo() {
       let dbname = document.getElementById('dbname');
       let dbdesc = document.getElementById('dbdesc');
       let dbimg = document.getElementById('dbimg');
+      let dbland = document.getElementById('dbland');
+      let dbmanu = document.getElementById('manufacturer');
       dbname.innerText = `${dbinfo.name}`;
+      dbmanu.innerText = `${dbinfo.manu}`;
       dbdesc.innerText = `${dbinfo.desc}`;
+      dbland.innerText = `${dbinfo.land}`;
       dbimg.src = `${dbinfo.img}`;
+      dbimg.style = "max-height: 550px;"
       if(dbname.innerText != "") { $(".dbinfo").show(); }
   } catch(e) {
       getQRInfo();

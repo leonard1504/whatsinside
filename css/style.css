@@ -167,6 +167,7 @@ body {
   min-width: 100%;
   flex-direction: column;
   list-style-type: none;
+  width: auto;
 }
 
 .genForm > li > input,
@@ -197,6 +198,10 @@ body {
   border: none;
   appearance: none;
   font-family: 'Sora', sans-serif;
+}
+
+.genForm > label {
+  color:white;
 }
 
 *:focus {
@@ -240,7 +245,7 @@ select::-ms-expand {
   padding: 5px;
 }
 
-.container .dbinfo #dbdesc_container {
+.container .dbinfo #dbland_container {
   padding-right: 20px;
 }
 
@@ -253,4 +258,15 @@ select::-ms-expand {
 
 .container .dbinfo div{
   margin-left: 10px;
+}
+
+.container #overlay {
+  margin-left: 10px;
+  position: absolute;
+}
+
+.container #scanimg {
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
 }
